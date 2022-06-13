@@ -3,7 +3,7 @@ import { trpc } from '../utils/trcp';
 
 const Home: NextPage = () => {
 
-  const { data, isLoading } = trpc.useQuery(["getAllMedias"]);
+  const { data, isLoading } = trpc.useQuery(["media.get-all"]);
 
   if (isLoading || !data) {
     return <div>Loading...</div>
