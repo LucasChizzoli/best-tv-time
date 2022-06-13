@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { prisma } from '../db/client';
+import { trpc } from '../utils/trcp';
 
 
 export const getServerSideProps = async () => {
@@ -15,6 +16,12 @@ export const getServerSideProps = async () => {
 
 const Home: NextPage = (props: any) => {
 
+  const { data, isLoading } = trpc.useQuery(["hello"])
+
+  if (isLoading || !data) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div>
       <Head>
@@ -24,7 +31,7 @@ const Home: NextPage = (props: any) => {
       </Head>
       <main>
         <h1 className="text-3xl font-bold underline">
-          Hello world
+          Hello world {data.greeting}
         </h1>
 
         <code>
