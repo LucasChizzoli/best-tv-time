@@ -1,7 +1,20 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { prisma } from '../db/client';
 
-const Home: NextPage = () => {
+
+export const getServerSideProps = async () => {
+  const media = await prisma.media.findMany();
+
+  return {
+    props: {
+      media: JSON.stringify(media),
+    }
+  };
+}
+
+const Home: NextPage = (props: any) => {
+
   return (
     <div>
       <Head>
@@ -13,9 +26,13 @@ const Home: NextPage = () => {
         <h1 className="text-3xl font-bold underline">
           Hello world
         </h1>
+
+        <code>
+          { props.media }
+        </code>
       </main>
     </div>
   )
 }
 
-export default Home
+export default Home;
