@@ -1,18 +1,18 @@
-const MAX_DEX_ID = 5;
+const MAX_DEX_ID = 514;
 
-export const getRandomMovie: (notThisOne?: number) => number = (notThisOne?: number) => {
-  const movieIndex = Math.floor(Math.random() * MAX_DEX_ID) + 1;
+export const getRandomDog: (notThisOne?: number) => number = (notThisOne?: number) => {
+  const dogIndex = Math.floor(Math.random() * MAX_DEX_ID) + 1;
 
-  if (movieIndex !== notThisOne) {
-    return movieIndex;
+  if (dogIndex !== notThisOne) {
+    return dogIndex;
   }
 
-  return getRandomMovie(movieIndex);
+  return getRandomDog(dogIndex);
 }
 
-export const getOptionsForVote = () => {
-  const firstId = getRandomMovie();
-  const secondId = getRandomMovie(firstId);
+export const getOptionsForVote = (): number[] => {
+  const firstId = getRandomDog();
+  const secondId = getRandomDog(firstId);
 
   return [firstId, secondId];
 }
