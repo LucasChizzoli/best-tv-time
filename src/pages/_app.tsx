@@ -25,6 +25,14 @@ export default withTRPC<AppRouter>({
        */
       // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
       transformer: superjson,
+      queryClientConfig: {
+        defaultOptions: {
+          queries: {
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+          },
+        },
+      },
     };
   },
   /**
