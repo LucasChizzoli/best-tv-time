@@ -8,7 +8,7 @@ export const dogsRouter = trpc
   .router()
   .query('get-all', {
     async resolve() {
-      return await prisma.media.findMany();
+      return await prisma.dog.findMany();
     }
   })
   .query('get-dog-pairs', {

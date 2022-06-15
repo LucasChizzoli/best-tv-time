@@ -12,13 +12,12 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model Media {
+model Dog {
   id        Int      @id @unique
   createdAt DateTime @default(now())
 
-  type      String
-  cover_url String @db.VarChar(1000)
-  title     String
+  imageUrl String @db.VarChar(1000)
+  name     String
 
   VoteFor     Vote[] @relation("votedFor")
   VoteAgainst Vote[] @relation("votedAgainst")
@@ -28,8 +27,8 @@ model Vote {
   id        String   @id @unique @default(cuid())
   createdAt DateTime @default(now())
 
-  votedFor     Media @relation(name: "votedFor", fields: [votedForId], references: [id])
-  votedAgainst Media @relation(name: "votedAgainst", fields: [votedAgainstId], references: [id])
+  votedFor     Dog @relation(name: "votedFor", fields: [votedForId], references: [id])
+  votedAgainst Dog @relation(name: "votedAgainst", fields: [votedAgainstId], references: [id])
 
   votedForId     Int
   votedAgainstId Int
