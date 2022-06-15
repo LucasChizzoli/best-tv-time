@@ -14,8 +14,8 @@ const Home: NextPage = () => {
 
   return (
     <div className="h-screen w-screen flex flex-col justify-center items-center">
-      <h1 className="text-2xl text-center">
-        Which dog is cuetter?
+      <h1 className="text-2xl text-center mb-5">
+        Which dog is cutest?
       </h1>
       <div className="mt-5 flex justify-between max-w-2xl">
         <div className="w-200">
