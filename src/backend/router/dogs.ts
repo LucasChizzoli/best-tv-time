@@ -2,7 +2,7 @@ import * as trpc from '@trpc/server';
 import { env } from 'process';
 import { z } from 'zod';
 import { prisma } from '../../db/client';
-import { getOptionsForVote } from '../../utils/getRandomMovie';
+import { getOptionsForVote } from '../../utils/getRandomDog';
 
 export const dogsRouter = trpc
   .router()
@@ -16,6 +16,10 @@ export const dogsRouter = trpc
       const [firstId, secondId] = getOptionsForVote();
       const firstDog = await prisma.dog.findFirst({where: { id: firstId }});
       const secondDog = await prisma.dog.findFirst({where: { id: secondId }});
+
+      if (!firstDog || !secondDog) {
+        throw new Error("Dogs not found");
+      }
       
       return [firstDog, secondDog];
     }
