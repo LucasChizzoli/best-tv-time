@@ -13,7 +13,10 @@ export const dogsRouter = trpc
   })
   .query('get-dog-pairs', {
     async resolve() {
-      const [firstId, secondId] = getOptionsForVote()
-      return [];
+      const [firstId, secondId] = getOptionsForVote();
+      const firstDog = await prisma.dog.findFirst({where: { id: firstId }});
+      const secondDog = await prisma.dog.findFirst({where: { id: secondId }});
+      
+      return [firstDog, secondDog];
     }
   });

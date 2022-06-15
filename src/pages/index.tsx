@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import { trpc } from '../utils/trcp';
+import Image from 'next/image';
 
 const Home: NextPage = () => {
   const {data, isLoading} = trpc.useQuery(["dogs.get-dog-pairs"]);
@@ -17,9 +18,15 @@ const Home: NextPage = () => {
         Which dog is cuetter?
       </h1>
       <div className="mt-5 flex justify-between max-w-2xl">
-        <div className="w-16 h-16 bg-red-200">{dogOne}</div>
+        <div className="w-200">
+          <Image src={dogOne?.imageUrl ?? ''} alt={dogOne?.name} height="200" width="200" />
+          <h2 className="text-xl">{dogOne?.name}</h2>
+        </div>
         <div className="p-8">vs</div>
-        <div className="w-16 h-16 bg-red-200">{dogTwo}</div>
+        <div className="w-200">
+        <Image src={dogTwo?.imageUrl ?? ''} alt={dogTwo?.name} height="200" width="200" />
+        <h2 className="text-xl">{dogTwo?.name}</h2>
+        </div>
       </div>
     </div>
   )
