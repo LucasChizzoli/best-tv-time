@@ -21,6 +21,21 @@ export const dogsRouter = trpc
         throw new Error("Dogs not found");
       }
       
-      return [firstDog, secondDog];
+      return { firstDog, secondDog };
+    }
+  })
+  .mutation('vote-dog', {
+    input: z.object({
+      votedFor: z.number(),
+      votedAgainst: z.number(),
+    }),
+    async resolve({input}) {
+      const vote = await prisma.vote.create({
+        data: {
+          votedForId: input.votedFor,
+          votedAgainstId: input.votedAgainst,
+        }
+      })
+      return { success: true, vote };
     }
   });
