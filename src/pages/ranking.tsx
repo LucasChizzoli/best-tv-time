@@ -6,8 +6,6 @@ const Ranking: NextPage = () => {
 
   const { data: rankings, isLoading } = trpc.useQuery(["dogs.get-ranking"]);
 
-  console.log("ranking: ", rankings);
-
   const getVotesPercent = (dog: { name: string, imageUrl: string, _count: { VoteFor: number, VoteAgainst: number} }) => {
     const { VoteFor, VoteAgainst } = dog._count;
     
@@ -16,6 +14,14 @@ const Ranking: NextPage = () => {
     }
 
     return (VoteFor / (VoteFor + VoteAgainst)) * 100;
+  }
+
+  if (isLoading) {
+    return (
+      <div className="h-screen w-screen flex flex-col justify-center items-center bg-gray-800 text-white text-center text-2xl">
+        Loading...
+      </div>
+    )
   }
 
   return (
@@ -27,15 +33,14 @@ const Ranking: NextPage = () => {
         {rankings && rankings.map(ranking => (
           <div key={ranking.id} className="flex border-b border-gray-500 gap-4 my-3 py-3">
             <div>
-              <Image src={ranking.imageUrl ? ranking.imageUrl : '/public/vercel.svg'} width={100} height={100} alt={ranking.name} />
+              <Image src={ranking.imageUrl ? ranking.imageUrl : '/image-placeholder.png'} width={100} height={100} alt={ranking.name} />
             </div>
             <div>
               <h3 className="text-xl">{ranking.name}</h3>
-              <p className="mt-3">Cutets: {getVotesPercent(ranking)}</p>
+              <p className="mt-3">Cutets: {getVotesPercent(ranking).toFixed(2)}%</p>
             </div>
           </div>
         ))}
-        
       </div>
     </div>
   )
