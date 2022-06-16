@@ -55,3 +55,6 @@ export const dogsRouter = trpc
       return { success: true, vote };
     }
   });
+
+  // export type definition of API
+export type DogsRouter = typeof dogsRouter;
