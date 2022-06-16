@@ -6,9 +6,25 @@ import { getOptionsForVote } from '../../utils/getRandomDog';
 
 export const dogsRouter = trpc
   .router()
-  .query('get-all', {
+  .query('get-ranking', {
     async resolve() {
-      return await prisma.dog.findMany();
+      return await prisma.dog.findMany({
+        orderBy: {
+          VoteFor: { _count: "desc" }
+        },
+        take: 10,
+        select: {
+          id: true,
+          name: true,
+          imageUrl: true,
+          _count: {
+            select: {
+              VoteFor: true,
+              VoteAgainst: true,
+            },
+          },
+        },
+      });
     }
   })
   .query('get-dog-pairs', {
