@@ -10,7 +10,7 @@ export const dogsRouter = trpc
     async resolve() {
       return await prisma.dog.findMany({
         orderBy: {
-          VoteFor: { _count: "desc" }
+          VoteFor: { _count: 'desc' },
         },
         take: 10,
         select: {
@@ -25,36 +25,36 @@ export const dogsRouter = trpc
           },
         },
       });
-    }
+    },
   })
   .query('get-dog-pairs', {
     async resolve() {
       const [firstId, secondId] = getOptionsForVote();
-      const firstDog = await prisma.dog.findFirst({where: { id: firstId }});
-      const secondDog = await prisma.dog.findFirst({where: { id: secondId }});
+      const firstDog = await prisma.dog.findFirst({ where: { id: firstId } });
+      const secondDog = await prisma.dog.findFirst({ where: { id: secondId } });
 
       if (!firstDog || !secondDog) {
-        throw new Error("Dogs not found");
+        throw new Error('Dogs not found');
       }
-      
+
       return { firstDog, secondDog };
-    }
+    },
   })
   .mutation('vote-dog', {
     input: z.object({
       votedFor: z.number(),
       votedAgainst: z.number(),
     }),
-    async resolve({input}) {
+    async resolve({ input }) {
       const vote = await prisma.vote.create({
         data: {
           votedForId: input.votedFor,
           votedAgainstId: input.votedAgainst,
-        }
-      })
+        },
+      });
       return { success: true, vote };
-    }
+    },
   });
 
-  // export type definition of API
+// export type definition of API
 export type DogsRouter = typeof dogsRouter;

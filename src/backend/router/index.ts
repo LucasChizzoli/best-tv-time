@@ -6,7 +6,7 @@ import { dogsRouter } from './dogs';
 export const appRouter = trpc
   .router()
   .transformer(superjson)
-  .merge("dogs.", dogsRouter);
+  .merge('dogs.', dogsRouter);
 
 // export type definition of API
 export type AppRouter = typeof appRouter;
